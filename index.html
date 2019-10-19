@@ -8,9 +8,9 @@
           angular.module('CursoAngular').controller('CursoAngularCtlr', function($scope){
               $scope.app = 'Nomes';
               $scope.nomes = [
-                {nome: 'Erick'},
-                {nome: 'Ferreira'},
-                {nome:  'Araujo'},
+                {nome: 'Erick', cor: '#f00'},
+                {nome: 'Ferreira', cor: '#f0f'},
+                {nome:  'Araujo', cor: '#00f'},
               ];
               $scope.generos = [
                 {nome: 'masculino'},
@@ -52,11 +52,13 @@
                 <th></th>
                 <th>Nome</th>
                 <th>Genero</th>
+                <th></th>
             </tr>
             <tr ng-class="{'selected bold' : nome.selected}" ng-repeat="nome in nomes">
                 <td><input type="checkbox" ng-model="nome.selected"></td>
                 <td>{{nome.nome}}</td>
                 <td>{{nome.genero.nome}}</td>
+                <td><div style="width:20px; height:20px" ng-style="{'background': nome.cor}"></div></td>
             </tr>
         </table>
         <hr/>
