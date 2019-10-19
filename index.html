@@ -1,0 +1,71 @@
+<html ng-app="CursoAngular">
+  <head>
+      <title>Curso de Angular</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+      <script src="assets/script/angular.js"></script>
+      <script>
+          angular.module('CursoAngular', []);
+          angular.module('CursoAngular').controller('CursoAngularCtlr', function($scope){
+              $scope.app = 'Nomes';
+              $scope.nomes = [
+                {nome: 'Erick'},
+                {nome: 'Ferreira'},
+                {nome:  'Araujo'},
+              ];
+              $scope.generos = [
+                {nome: 'masculino'},
+                {nome: 'feminino'}
+              ];
+              $scope.adicionarNome = function(nome){
+                $scope.nomes.push(angular.copy(nome));
+                //ou
+                delete $scope.nome;
+              };
+              $scope.deleteDados = function(nomes){
+               $scope.nomes = nomes.filter(function(nome){
+                  if(!nome.selected) return (nome);
+                });
+              };
+              $scope.checkboxSelected = function(nomes){
+                return nomes.some(function(nome){
+                  return nome.selected;
+                });
+              };
+          });
+      </script>
+  </head>  
+  <style>
+    .selected{
+      background: #ff0
+    }
+    .bold{
+      font-weight: 900;
+    }
+  </style>
+  <body class="container col-md-8" ng-controller="CursoAngularCtlr">
+      <div class="jumbotron text-center mt-5">
+       <!--  <h4 ng-bind='app'></h4>  --> 
+        <!-- ou assim -->
+        <h4>{{app}}</h4>  
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Genero</th>
+            </tr>
+            <tr ng-class="{'selected bold' : nome.selected}" ng-repeat="nome in nomes">
+                <td><input type="checkbox" ng-model="nome.selected"></td>
+                <td>{{nome.nome}}</td>
+                <td>{{nome.genero.nome}}</td>
+            </tr>
+        </table>
+        <hr/>
+        <input type="text" ng-model="nome.nome" class="form-control" placeholder="Novo Nome"/>
+        <select class="form-control mt-3" ng-model="nome.genero" ng-options="genero.nome for genero in generos">
+          <option value="">Selecione o Sexo</option>
+        </select>
+        <button ng-click="adicionarNome(nome)" ng-disabled="!nome.nome" class="btn btn-success btn-block mt-3">Adicionar Nome</button>
+        <button ng-click="deleteDados(nomes)" ng-disabled="!checkboxSelected(nomes)" class="btn btn-danger btn-block mt-3">Excluir</button>
+      </div>
+  </body>
+</html>
